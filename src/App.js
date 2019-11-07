@@ -1,26 +1,67 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import TodoList from './todoList/todoList';
+import AddTodo from './addTodo/addTodo';
+import './App.sass';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+
+    constructor(){
+        super();
+        this.state = {
+            todos: []
+        };
+    }
+
+    render(){
+        return (
+            <div className="container">
+                <div className="columns">
+                    <div className="column">
+                        <AddTodo addTodoFn={this.addTodo} />
+                        <TodoList todos={this.state.todos}  updateTodoFn={this.updateTodo} />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    componentDidMount(){
+        const todos = localStorage.getItem('todos');
+        if(todos){
+            const savedTodos = JSON.parse(todos);
+            this.setState({todos: savedTodos})
+        }else {
+            console.log('No todos')
+        }
+        
+    }
+
+    addTodo = async (todo) => {
+       await this.setState({
+            todos: [...this.state.todos, {
+                text: todo,
+                completed: false
+            }]
+        });
+
+        localStorage.setItem('todos', JSON.stringify(this.state.todos))
+        console.log(localStorage.getItem('todos'))
+    }
+
+    updateTodo = async (todo) =>{
+        const newTodos = this.state.todos.map(_todo =>{
+            if(todo ===_todo){
+                return {
+                    text: todo.text,
+                    completed: !todo.completed
+                }
+            }
+            else return _todo
+        })
+        await this.setState({todos: newTodos})
+        localStorage.setItem('todos', JSON.stringify(this.state.todos) )
+    }
+
 }
 
 export default App;
