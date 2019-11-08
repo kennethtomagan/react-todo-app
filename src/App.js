@@ -18,9 +18,35 @@ class App extends React.Component {
                 <div className="columns">
                     <div className="column">
                         <AddTodo addTodoFn={this.addTodo} />
-                        <TodoList todos={this.state.todos}  updateTodoFn={this.updateTodo} />
                     </div>
                 </div>
+                <div className="columns">
+                    <div className="column">
+                        <div className="card">
+                            <div className="card-header">
+                                <p className="card-header-title">To Do List</p>
+                            </div>
+                            <div className="card-content">
+                                <div className="content">
+                                <TodoList todos={this.state.todos}  updateTodoFn={this.updateTodo} completed={false}/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="column">
+                        <div className="card">
+                            <div className="card-header">
+                                <p className="card-header-title">Done List</p>
+                            </div>
+                            <div className="card-content">
+                                <div className="content">
+                                    <TodoList todos={this.state.todos}  updateTodoFn={this.updateTodo} completed={true}/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         )
     }
@@ -45,7 +71,6 @@ class App extends React.Component {
         });
 
         localStorage.setItem('todos', JSON.stringify(this.state.todos))
-        console.log(localStorage.getItem('todos'))
     }
 
     updateTodo = async (todo) =>{

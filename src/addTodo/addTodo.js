@@ -25,6 +25,7 @@ class AddTodo extends React.Component {
                 </form>
                 <div className="list is-hoverable">
                 </div>
+                
             </section>
         </div>
         )

@@ -3,15 +3,14 @@ import TodoItem from '../todoItem/todoItem';
 
 class TodoList extends React.Component {
     render() {
-        const { todos } = this.props;
+        const { todos, completed } = this.props;
         return (
             <div className="todoListContainer list is-hoverable">
             {
                 todos.map((_todo, _index) => {
                     return (
-                        <TodoItem updateTodoFn={this.updateTodo} key={_index} todo={_todo}></TodoItem>
+                        <TodoItem updateTodoFn={this.updateTodo} key={_index} todo={_todo} completed={completed}></TodoItem>
                     )
-                    
                 })
             }
             </div>
